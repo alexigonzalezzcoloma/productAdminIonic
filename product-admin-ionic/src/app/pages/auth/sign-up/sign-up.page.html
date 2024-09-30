@@ -1,0 +1,49 @@
+<app-header backButton="/auth" title="Registro"></app-header>
+
+<ion-content>
+    <div class="d-flex-center">
+        <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()" (keypress.enter)="submit()">
+            <app-logo></app-logo>
+
+            <app-custom-input autocomplete="name" icon="person-outline" [control]="form.controls.name" type="text"
+                label="nombre"></app-custom-input>
+            <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
+                <div *ngIf="form.controls.name.errors?.['required']">El nombre es requerido</div>
+                <div *ngIf="form.controls.name.errors?.['minlenght']">El nombre debe tener al menos 4 caracteres</div>
+            </div>
+
+            <app-custom-input autocomplete="email" icon="mail-outline" [control]="form.controls.email" type="email"
+                label="correo"></app-custom-input>
+            <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
+                <div *ngIf="form.controls.email.errors?.['required']">El correo es requerido</div>
+                <div *ngIf="form.controls.email.errors?.['email']">Ingrese un correo válido</div>
+            </div>
+
+            <app-custom-input [control]="form.controls.password" type="password" label="Contraseña"
+                icon="lock-closed-outline"></app-custom-input>
+            <div class="validators" *ngIf="form.controls.password.errors && form.controls.password.touched">
+                <div *ngIf="form.controls.password.errors?.['required']">La contraseña es requerida</div>
+            </div>
+            <ion-select formControlName="district" label="Distrito" placeholder="Seleccione Distrito" mode="ios" (ionChange)="getChurchs($event);setDistrictId($event)">
+                <ion-select-option *ngFor="let item of districts" [value]="item">{{item.name}}</ion-select-option>
+            </ion-select>
+            <ion-select formControlName="church" label="Iglesia" placeholder="Seleccione Iglesia" mode="ios" (ionChange)="getGps($event);setChurchId($event)">
+                <ion-select-option *ngFor="let item of churchs" [value]="item">{{item.name}}</ion-select-option>
+            </ion-select>
+            <ion-select formControlName="gps" label="Gps" placeholder="Seleccione Gps" mode="ios" (ionChange)="setGpsId($event)">
+                <ion-select-option *ngFor="let item of gps" [value]="item">{{item.name}}</ion-select-option>
+            </ion-select>
+            <!-- <app-custom-input [control]="form.controls.distict" [itemsForSelect]="districtList" label="Distrito"></app-custom-input> -->
+
+
+            <ion-button expand="block" mode="ios" class="submit" type="submit" [disabled]="form.invalid">
+                Registrarme
+                <ion-icon slot="end" name="person-add-outline"></ion-icon>
+            </ion-button>
+
+            
+    <!-- {{form.value | json}} -->
+        </form>
+    </div>
+
+</ion-content>

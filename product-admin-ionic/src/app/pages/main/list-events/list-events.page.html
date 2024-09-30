@@ -1,0 +1,14 @@
+<app-header  title="Lista de Eventos" backButton="main/home"></app-header>
+<ion-content>
+  <ion-select label="Periodo" placeholder="Seleccione Periodo" mode="ios" (ionChange)="getEvents($event)">
+    <ion-select-option *ngFor="let item of periods" [value]="item.name">{{item.description}}</ion-select-option>
+  </ion-select>
+  <ion-item *ngFor="let c of events" mode="ios">
+    <ion-label><strong>{{c.name}}</strong><br>{{c.description.slice(0,15)}}...</ion-label>
+    <ion-label>x respuestas</ion-label>
+
+    <ion-item-option color="success">
+      <ion-icon class="option-btn" name="eye-outline" (click)="navigateToPage(c.id)"></ion-icon>
+    </ion-item-option>
+  </ion-item>
+</ion-content>

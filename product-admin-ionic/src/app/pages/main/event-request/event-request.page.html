@@ -1,0 +1,50 @@
+<app-header [title]="titleEvent" backButton="main/home"></app-header>
+
+<ion-content>
+  <div class="d-flex-center">
+    <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()" (keypress.enter)="submit()">
+      <ion-input labelPlacement="floating" formControlName="name">
+        <div slot="label">Nombre</div>
+      </ion-input>
+      <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
+        <div *ngIf="form.controls.name.errors?.['required']">El nombre es requerido</div>
+        <div *ngIf="form.controls.name.errors?.['minlenght']">El nombre debe tener al menos 4 caracteres</div>
+      </div>
+
+      <ion-textarea label="Descripción" formControlName="description"></ion-textarea>
+      <div class="validators" *ngIf="form.controls.description.errors && form.controls.description.touched">
+        <div *ngIf="form.controls.description.errors?.['required']">La Descripción es requerida</div>
+        <div *ngIf="form.controls.description.errors?.['minlenght']">La Descripción debe tener al menos 20 letras</div>
+      </div>
+
+      <ion-select label="Periodo" placeholder="Seleccione Periodo" mode="ios" formControlName="period">
+        <ion-select-option *ngFor="let item of periods" [value]="item.name">{{item.description}}</ion-select-option>
+      </ion-select>
+
+      <div class="validators" *ngIf="form.controls.period.errors && form.controls.period.touched">
+        <div *ngIf="form.controls.period.errors?.['required']">El periodo es requerido</div>
+        <div *ngIf="form.controls.period.errors?.['minlenght']">El periodo debe tener al menos 4 caracteres</div>
+      </div>
+
+      <ion-input labelPlacement="floating" formControlName="imageQuantity">
+        <div slot="label">N° de Imágenes</div>
+      </ion-input>
+      <div class="validators" *ngIf="form.controls.imageQuantity.errors && form.controls.imageQuantity.touched">
+        <div *ngIf="form.controls.imageQuantity.errors?.['required']">El Precio es requerido</div>
+        <div *ngIf="form.controls.imageQuantity.errors?.['min']">La cantidad minima debe ser mayor o igual a cero</div>
+    </div>
+
+      <ion-input labelPlacement="floating" formControlName="documentQuantity">
+        <div slot="label">N° de Documentos </div>
+      </ion-input>
+
+      <ion-button expand="block" mode="ios" class="submit" type="submit" [disabled]="form.invalid">
+        Guardar Evento
+        <ion-icon slot="end" name="save"></ion-icon>
+      </ion-button>
+    </form>
+
+  </div>
+
+
+</ion-content>

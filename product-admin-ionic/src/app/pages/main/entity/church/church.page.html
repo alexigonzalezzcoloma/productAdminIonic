@@ -1,0 +1,52 @@
+<app-header title="Gestión de Iglesias" backButton="main/home/entity"></app-header>
+<ion-content [fullscreen]="true">
+
+  <form [formGroup]="form">
+  <ion-select label="Distrito" placeholder="Seleccione Distrito" mode="ios" (ionChange)="getChurchs($event,false);setDistrictId($event)" formControlName="district">
+    <ion-select-option *ngFor="let item of districts" [value]="item">{{item.name}}</ion-select-option>
+  </ion-select>
+  <br><br>
+  <h5>Iglesias</h5>
+  <ion-item *ngFor="let c of churchs" mode="ios">
+    <ion-label>{{c.name}}</ion-label>
+    <ion-item-option color="danger">
+      <ion-icon class="option-btn" name="trash-outline" (click)="confirmDeleteChurch(c)"></ion-icon>
+    </ion-item-option>
+  </ion-item>
+
+
+
+    <ion-modal trigger="open-modal-district" (willDismiss)="exitModal()">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-button mode="ios" (click)="exitModal()">Cancel</ion-button>
+            </ion-buttons>
+            <ion-title>Agregar Distrito</ion-title>
+            <ion-buttons slot="end">
+              <ion-button mode="ios" [strong]="true" (click)="save()" [disabled]="form.invalid">Guardar</ion-button>
+              <!-- <ion-button mode="ios" [strong]="true" (click)="updateDistrict()">Guardar</ion-button> -->
+
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-item>
+            <ion-label>Nombre</ion-label>
+            <ion-input type="text" placeholder="Nombre Iglesia" formControlName="name"></ion-input><br>
+          </ion-item>
+          <p>No olvide Seleccionar un distrito</p>
+        </ion-content>
+
+
+      </ng-template>
+    </ion-modal>
+  </form>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add" id="open-modal-district"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
