@@ -1,7 +1,8 @@
 export interface EventRequest{
-    id: string,
-    title:string ,
+    id?: string,
+    name:string ,
     description:string,
-    numImages:number,
-    numDocuments:number
+    imageQuantity:number,
+    documentQuantity:number,
+    period:String
 }

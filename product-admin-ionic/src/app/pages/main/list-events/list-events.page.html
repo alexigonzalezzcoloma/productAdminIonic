@@ -5,7 +5,7 @@
   </ion-select>
   <ion-item *ngFor="let c of events" mode="ios">
     <ion-label><strong>{{c.name}}</strong><br>{{c.description.slice(0,15)}}...</ion-label>
-    <ion-label>x respuestas</ion-label>
+    <ion-label *ngIf="isAdmin">x respuestas</ion-label>
 
     <ion-item-option color="success">
       <ion-icon class="option-btn" name="eye-outline" (click)="navigateToPage(c.id)"></ion-icon>

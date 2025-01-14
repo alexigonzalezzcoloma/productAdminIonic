@@ -17,7 +17,7 @@ export class EventRequestPage implements OnInit {
   periods
   fatherData
   titleEvent="Crear Evento"
-  event=[]
+  event:any
 
   form = new FormGroup({
     name:new FormControl('',[Validators.required, Validators.minLength(4)]),
@@ -35,8 +35,6 @@ export class EventRequestPage implements OnInit {
     if(this.id){
       this.titleEvent="Ver Evento"
       this.getEventRequestById(this.id)
-      console.log(this.event)
-      // this.form.patchValue(event[0])
     }
   }
 
@@ -51,15 +49,25 @@ export class EventRequestPage implements OnInit {
     })
   }
 
-  getEventRequestById(id) {
-    let path = `/eventRequest`
-    let query = [where('id','==',id)]
-    let sub = this.firebaseSvc.getCollectionData(path,query).subscribe({
-      next: (res: any) => {
-        this.event=res
-        sub.unsubscribe()
-      }
-    })
+  async getEventRequestById(id: string) {
+    const path = '/eventRequest'; // Ruta de la colección
+    const event = await this.firebaseSvc.getEventRequestById(path, id);
+    if (event) {
+      console.log('Evento encontrado:', event);
+      this.event=event
+      this.form.patchValue(event)
+      this.disableControlls()
+    } else {
+      console.log('Evento no encontrado');
+    }
+  }
+
+  disableControlls(){
+    this.form.get('name').disable();
+    this.form.get('description').disable();
+    this.form.get('period').disable();
+    this.form.get('imageQuantity').disable();
+    this.form.get('documentQuantity').disable();
   }
 
   async submit(){

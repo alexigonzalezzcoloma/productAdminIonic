@@ -45,6 +45,29 @@ export class FirebaseService {
     return collectionData(query(ref,...collectionQuery),{idField:'id'})
   }
 
+  async getEventRequestById(path: string, id: string) {
+    const docRef = doc(getFirestore(), path, id); // Ruta del documento con el 'id'
+    const docSnapshot = await getDoc(docRef); // Obtenemos el documento
+    if (docSnapshot.exists()) {
+      return docSnapshot.data(); // Si existe, retornamos los datos
+    } else {
+      console.log('No se encontró el documento con el ID proporcionado');
+      return null; // Si no existe el documento
+    }
+  }
+
+  async getDocumentById(path: string, id: string) {
+    const docRef = doc(getFirestore(), path, id); // Referencia al documento usando el ID
+    const docSnap = await getDoc(docRef); // Obtener el documento
+
+    if (docSnap.exists()) {
+      return docSnap.data(); // Devuelve los datos del documento
+    } else {
+      console.log('No se encontró el documento con ID:', id);
+      return null; // Si no existe el documento
+    }
+  }
+
   setDocument(path: string, data: any) {
     return setDoc(doc(getFirestore(), path), data);
   }

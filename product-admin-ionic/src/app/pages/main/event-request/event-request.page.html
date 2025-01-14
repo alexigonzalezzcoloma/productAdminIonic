@@ -38,8 +38,12 @@
         <div slot="label">N° de Documentos </div>
       </ion-input>
 
-      <ion-button expand="block" mode="ios" class="submit" type="submit" [disabled]="form.invalid">
+      <ion-button expand="block" mode="ios" class="submit" type="submit" [disabled]="form.invalid" *ngIf="!id">
         Guardar Evento
+        <ion-icon slot="end" name="save"></ion-icon>
+      </ion-button>
+      <ion-button expand="block" mode="ios" class="submit" type="submit" *ngIf="id">
+        Completar Desafio
         <ion-icon slot="end" name="save"></ion-icon>
       </ion-button>
     </form>

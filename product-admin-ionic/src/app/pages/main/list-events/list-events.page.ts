@@ -3,6 +3,7 @@ import { where } from 'firebase/firestore';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Router } from '@angular/router';
+import { UserType } from '../../../models/userType.model';
 
 
 @Component({
@@ -13,10 +14,11 @@ import { Router } from '@angular/router';
 export class ListEventsPage implements OnInit {
   firebaseSvc = inject(FirebaseService)
   utilsSvc = inject(UtilsService)
-
   events
   periods
-
+  userType=localStorage.getItem('userType')
+  isAdmin:boolean
+  
   constructor(private _router: Router) { }
   getEvents(event) {
     let period = event.detail.value
@@ -48,6 +50,14 @@ export class ListEventsPage implements OnInit {
   ngOnInit() {
     // this.getEvents()
     this.getPeriods()
+    if(this.userType=="ADMIN"){
+      this.isAdmin=true
+      console.log("Es Admin")
+    }else{
+      console.log("No es Admin")
+    }
   }
+
+  
 
 }
